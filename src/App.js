@@ -1,20 +1,26 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { isBrowser } from "react-device-detect";
+import Browser from "./browser/browser";
+import Mobile from "./mobile/mobile";
+import GlobalStyle from "./styles/globalStyle";
 
 function App() {
-  const [changeColor, setChangeColor] = useState(1);
-
-  const backColor = () => {
-    setChangeColor((prev) => prev + 1);
+  const renderPage = () => {
+    if (isBrowser) {
+      return <Browser />;
+    } else {
+      return <Mobile />;
+    }
   };
+
   return (
-    <ColorArea>
-      <button onClick={backColor}>{changeColor}</button>
-    </ColorArea>
+    <div>
+      <div>{renderPage()}</div>
+      <GlobalStyle />
+    </div>
   );
 }
-
-const ColorArea = styled.div``;
 export default App;
